@@ -6,14 +6,17 @@ library(dplyr)
 # Read data
 NEI <- readRDS('~/exploring_data_analysis/summarySCC_PM25.rds')
 
-# Sum emissions
+baltimore <- '24510'
+
+# Sum Baltimore City emissions
 NEI_agg <- NEI %>%
-  filter(fips == '24510') %>%
+  filter(fips == baltimore) %>%
   group_by(year) %>%
   summarise(emissions = sum(Emissions)) %>%
   ungroup()
 
 # Plot to png
 png('plot2.png')
-plot(NEI_agg$year, NEI_agg$emissions, type='b', main='Baltimore Emissions', xlab='Year', ylab='Emissions (tons)')
+barplot(NEI_agg$emissions, names.arg=NEI_agg$year, border=NA,
+        main='Total Emissions in Baltimore City', xlab='Year', ylab='Emissions (tons)')
 dev.off()

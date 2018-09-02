@@ -7,17 +7,20 @@ library(ggplot2)
 # Read data
 NEI <- readRDS('~/exploring_data_analysis/summarySCC_PM25.rds')
 
-# Sum emissions
+baltimore <- '24510'
+
+# Sum Baltimore City emissions
 NEI_agg <- NEI %>%
-  filter(fips == '24510') %>%
-  group_by(type, year) %>%
+  filter(fips == baltimore) %>%
+  rename(Type = type) %>%
+  group_by(Type, year) %>%
   summarise(emissions = sum(Emissions)) %>%
   ungroup()
 
 # Plot to png
 png('plot3.png')
-ggplot(NEI_agg, aes(year, emissions, color=type)) +
+ggplot(NEI_agg, aes(year, emissions, color=Type)) +
   geom_line(size=2) +
-  theme_classic() +
-  labs(title='Baltimore Emissions', x='Year', y='Emissions (tons)')
+  labs(title='Total Emissions in Baltimore City', x='Year', y='Emissions (tons)') +
+  theme_minimal()
 dev.off()

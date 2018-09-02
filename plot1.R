@@ -14,5 +14,6 @@ NEI_agg <- NEI %>%
 
 # Plot to png
 png('plot1.png')
-plot(NEI_agg$year, NEI_agg$emissions, type='b', main='Total Emissions', xlab='Year', ylab='Emissions (tons)')
+barplot(NEI_agg$emissions / 10^6, names.arg=NEI_agg$year, border=NA,
+        main='Total Emissions in the United States', xlab='Year', ylab='Emissions (million tons)')
 dev.off()
